@@ -1,4 +1,4 @@
-<h1 align="center">rust_bpe</h1>
+<h1 align="center">Rust BPE</h1>
 
 <p align="center">
   <picture>
