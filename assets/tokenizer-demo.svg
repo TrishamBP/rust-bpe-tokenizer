@@ -1,0 +1,88 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 860 380" width="860" height="380" role="img" aria-labelledby="title desc">
+  <title id="title">rust_bpe: text to bytes to merged tokens to text</title>
+  <desc id="desc">The word banana becomes six UTF-8 bytes. The pair 97, 110 ("an") merges into token 256. The token IDs 98, 256, 256, 97 decode back to banana.</desc>
+  <style>
+    .bg { fill: #0a1428; }
+    .panel { fill: #0f1d3a; stroke: #1e3a66; stroke-width: 1; }
+    .label { fill: #7f93b5; font: 600 13px ui-monospace, Consolas, monospace; letter-spacing: .08em; }
+    .text { fill: #e6f1ff; font: 500 22px ui-monospace, Consolas, monospace; }
+    .note { fill: #7f93b5; font: 13px ui-monospace, Consolas, monospace; }
+    .box { fill: #12264a; stroke: #3b82f6; stroke-width: 1.5; }
+    .hot { fill: #0e3448; stroke: #22d3ee; stroke-width: 2; }
+    .merged { fill: #0e3448; stroke: #22d3ee; stroke-width: 2; }
+    .num { fill: #e6f1ff; font: 600 15px ui-monospace, Consolas, monospace; text-anchor: middle; }
+    .sub { fill: #22d3ee; font: 12px ui-monospace, Consolas, monospace; text-anchor: middle; }
+    .ok { fill: #22d3ee; font: 600 15px ui-monospace, Consolas, monospace; }
+    .rail { stroke: #1e3a66; stroke-width: 2; }
+    .dot { fill: #4cc9f0; }
+    .r1 { animation: r1 10s infinite; } .r2 { animation: r2 10s infinite; }
+    .r3 { animation: r3 10s infinite; } .r4 { animation: r4 10s infinite; }
+    .r5 { animation: r5 10s infinite; }
+    .slide { animation: slide 10s infinite; }
+    .pulse { animation: pulse 10s infinite; }
+    @keyframes r1 { 0% {opacity:0} 5%, 92% {opacity:1} 98%, 100% {opacity:0} }
+    @keyframes r2 { 0%, 14% {opacity:0} 19%, 92% {opacity:1} 98%, 100% {opacity:0} }
+    @keyframes r3 { 0%, 30% {opacity:0} 35%, 92% {opacity:1} 98%, 100% {opacity:0} }
+    @keyframes r4 { 0%, 56% {opacity:0} 61%, 92% {opacity:1} 98%, 100% {opacity:0} }
+    @keyframes r5 { 0%, 72% {opacity:0} 77%, 92% {opacity:1} 98%, 100% {opacity:0} }
+    @keyframes slide { 0%, 40% {transform: translateX(0)} 50%, 100% {transform: translateX(-10px)} }
+    @keyframes pulse { 0%, 40% {stroke-opacity:.35} 50%, 100% {stroke-opacity:1} }
+    @media (prefers-reduced-motion: reduce) { .r1,.r2,.r3,.r4,.r5,.slide,.pulse { animation: none; } }
+  </style>
+
+  <rect class="bg" width="860" height="380" rx="14"/>
+  <line class="rail" x1="28" y1="48" x2="28" y2="332"/>
+
+  <!-- 1. Raw text -->
+  <g class="r1">
+    <circle class="dot" cx="28" cy="48" r="5"/>
+    <text class="label" x="46" y="53">RAW TEXT</text>
+    <text class="text" x="210" y="56">"banana"</text>
+  </g>
+
+  <!-- 2. UTF-8 bytes -->
+  <g class="r2">
+    <circle class="dot" cx="28" cy="116" r="5"/>
+    <text class="label" x="46" y="121">UTF-8 BYTES</text>
+    <rect class="box" x="210" y="99" width="56" height="34" rx="4"/><text class="num" x="238" y="121">98</text>
+    <rect class="box" x="276" y="99" width="56" height="34" rx="4"/><text class="num" x="304" y="121">97</text>
+    <rect class="box" x="342" y="99" width="56" height="34" rx="4"/><text class="num" x="370" y="121">110</text>
+    <rect class="box" x="408" y="99" width="56" height="34" rx="4"/><text class="num" x="436" y="121">97</text>
+    <rect class="box" x="474" y="99" width="56" height="34" rx="4"/><text class="num" x="502" y="121">110</text>
+    <rect class="box" x="540" y="99" width="56" height="34" rx="4"/><text class="num" x="568" y="121">97</text>
+    <text class="note" x="616" y="121">b a n a n a</text>
+  </g>
+
+  <!-- 3. BPE pair merging -->
+  <g class="r3">
+    <circle class="dot" cx="28" cy="186" r="5"/>
+    <text class="label" x="46" y="191">BPE MERGE</text>
+    <rect class="box" x="210" y="169" width="56" height="34" rx="4"/><text class="num" x="238" y="191">98</text>
+    <rect class="hot pulse" x="276" y="169" width="56" height="34" rx="4"/><text class="num" x="304" y="191">97</text>
+    <g class="slide"><rect class="hot pulse" x="342" y="169" width="56" height="34" rx="4"/><text class="num" x="370" y="191">110</text></g>
+    <rect class="hot pulse" x="408" y="169" width="56" height="34" rx="4"/><text class="num" x="436" y="191">97</text>
+    <g class="slide"><rect class="hot pulse" x="474" y="169" width="56" height="34" rx="4"/><text class="num" x="502" y="191">110</text></g>
+    <rect class="box" x="540" y="169" width="56" height="34" rx="4"/><text class="num" x="568" y="191">97</text>
+    <text class="note" x="616" y="183">(97, 110) → 256 "an"</text>
+    <text class="note" x="616" y="201">frequency 2</text>
+  </g>
+
+  <!-- 4. Token IDs -->
+  <g class="r4">
+    <circle class="dot" cx="28" cy="256" r="5"/>
+    <text class="label" x="46" y="261">TOKEN IDS</text>
+    <rect class="box" x="210" y="235" width="56" height="42" rx="4"/><text class="num" x="238" y="261">98</text>
+    <rect class="merged" x="276" y="235" width="122" height="42" rx="4"/><text class="num" x="337" y="254">256</text><text class="sub" x="337" y="270">"an"</text>
+    <rect class="merged" x="408" y="235" width="122" height="42" rx="4"/><text class="num" x="469" y="254">256</text><text class="sub" x="469" y="270">"an"</text>
+    <rect class="box" x="540" y="235" width="56" height="42" rx="4"/><text class="num" x="568" y="261">97</text>
+    <text class="note" x="616" y="261">6 bytes → 4 tokens</text>
+  </g>
+
+  <!-- 5. Decoded text -->
+  <g class="r5">
+    <circle class="dot" cx="28" cy="326" r="5"/>
+    <text class="label" x="46" y="331">DECODED</text>
+    <text class="text" x="210" y="334">"banana"</text>
+    <text class="ok" x="340" y="332">✓ exact round trip</text>
+  </g>
+</svg>
